@@ -70,15 +70,7 @@ subprojects {
         sourceResources(sourceSets["main"])
     }
 
-    if (isKotlinProject()) {
-        val javaVersion4Kotlin = "1.8"
-        tasks.getByName<KotlinCompile>("compileKotlin") {
-            kotlinOptions.jvmTarget = javaVersion4Kotlin
-        }
-        tasks.getByName<KotlinCompile>("compileTestKotlin") {
-            kotlinOptions.jvmTarget = javaVersion4Kotlin
-        }
-    }
+  
     val javaVersion = JavaVersion.VERSION_1_8.toString()
     tasks.getByName<JavaCompile>("compileJava") {
         sourceCompatibility = javaVersion
