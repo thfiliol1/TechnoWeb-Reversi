@@ -1,1 +1,1 @@
-# TechnoWeb-Reversi
+Projet de JEE de troisième année F5 Isima

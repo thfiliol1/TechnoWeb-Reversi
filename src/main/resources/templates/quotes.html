@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Citation <span id="number" th:if="${quote.id > 0}" th:text="${quote.id}"></span></h1>
+        <p class="lead" style="height: 150px">
+            <span id="content" th:text="${quote.content}"></span> <br/> <span
+                style="font-style: italic;" id="author" th:text="${quote.author}"></span>
+        </p>
+
+        <p>
+        <div class="btn-group" role="group">
+            <th:block th:each="direction : ${quote.directions}">
+                <button type="button" class="btn btn-lg btn-success direction-button"
+                        th:id="${direction.id}"
+                        th:attr="targetIndex=${direction.indexOfDirection},enabled=${direction.targetLabel}"
+                        th:text="${direction.targetLabel}">
+                </button>
+            </th:block>
+        </div>
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript" src="/resources/js/quotes.js"></script>
+</body>
+</html>
