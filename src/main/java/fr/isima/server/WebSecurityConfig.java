@@ -1,15 +1,26 @@
 package fr.isima.server;
 
+import fr.isima.business.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private PlayerService playerService;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -26,11 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }).permitAll();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(User.withDefaultPasswordEncoder().username("grut").password("APass").roles("USER"))
-                .withUser(User.withDefaultPasswordEncoder().username("admin").password("admin").roles("ADMIN"));
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(playerService).passwordEncoder(passwordEncoder());
     }
 }

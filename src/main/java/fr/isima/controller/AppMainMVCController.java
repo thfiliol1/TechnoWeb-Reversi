@@ -10,15 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/main")
 public class AppMainMVCController {
 
-    private QuotesMVCController quotesMVCController;
+    private ListConnectedUserMVCController listConnectedUserMVCController;
 
     @Autowired
-    public AppMainMVCController(QuotesMVCController quotesMVCController) {
-        this.quotesMVCController = quotesMVCController;
+    public AppMainMVCController(ListConnectedUserMVCController listConnectedUserMVCController) {
+        this.listConnectedUserMVCController = listConnectedUserMVCController;
     }
 
     @GetMapping
     public ModelAndView main() {
-        return this.quotesMVCController.getQuote("apps-main", 1);
+        return this.listConnectedUserMVCController.getConnectedUsers("apps-main");
     }
 }
