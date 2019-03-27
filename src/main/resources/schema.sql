@@ -8,6 +8,7 @@ CREATE TABLE PLAYER (
    id INTEGER PRIMARY KEY AUTO_INCREMENT,
    username VARCHAR(200) NOT NULL UNIQUE,
    password VARCHAR(200),
+   is_playing BIT,
    is_connected BIT,
    color BIT
 );

@@ -37,8 +37,11 @@
             </div>
             <!-- /.navbar-collapse -->
         </div>
-        <div id="content-displayed" >
-
+        <div id="content-displayed" th:insert="connected-users :: body">
+            <%@include file="connected-users.jsp"%>
         </div>
 </div>
+</body>
 </html>
+
+

@@ -2,8 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="container">
-    <h1>Main page</h1>
+    <br/>
+    <div th:if="${listAvailablePlayers != null and not #lists.isEmpty(listAvailablePlayers)}">
+        <form class="form-signin" action="/play" method="post">
+            <h3>Veuillez selectionner un joueur afin de commencer la partie :</h3>
+            <br/>
+            <select class="form-control">
+                <option th:each="player : ${listAvailablePlayers}"
+                        th:value="${player.id}"
+                        th:text="${player.username}"
+                        th:selected="${event} == ${lastSelected}"/>
+            </select>
+            <br/>
+            <button class="btn btn-lg  btn-success btn-block" type="submit">Lancer</button>
+            <input type="hidden"
+                   th:name="playerSelected"
+                   th:value="${lastSelected}"/>
+        </form>
+    </div>
+    <div th:if="${listAvailablePlayers == null or #lists.isEmpty(listAvailablePlayers)}">
+        <h3>Il n'y a aucun joueur connecté pour le moment</h3>
+    </div>
+    <br/>
 </div>
-
 </body>
 </html>
+
+

@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,16 +27,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        uncomment to disable CSRF
-//        http.csrf().disable();
+        http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/resources/**","/play").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .successHandler((request, response, authentication) -> {
                     request.getSession().setAttribute("username", authentication.getName());
+                    playerService.setUserIsConnected(authentication.getName(),true);
                     response.sendRedirect("/main");
-                }).permitAll();
+                }).permitAll()
+                .and()
+                .logout()
+                .addLogoutHandler((request, response, authentication) -> {
+                    playerService.setUserIsConnected(authentication.getName(),false);
+                })
+                .permitAll();
     }
 
     @Override

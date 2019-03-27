@@ -18,13 +18,19 @@ public class PlayerBean implements Serializable {
     private String password;
 
     /**
-     * False is user not connected or true otherwise
+     * False if user is not playing or true otherwise
+     */
+    @Column(name = "is_playing")
+    private Boolean isPlaying;
+
+    /**
+     * False if user is not connected or true otherwise
      */
     @Column(name = "is_connected")
     private Boolean isConnected;
 
     /**
-     * False is color is white or true otherwise
+     * False if color is white or true otherwise
      */
     @Column(name = "color")
     private Boolean color;
@@ -51,6 +57,14 @@ public class PlayerBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(Boolean playing) {
+        isPlaying = playing;
     }
 
     public Boolean getConnected() {

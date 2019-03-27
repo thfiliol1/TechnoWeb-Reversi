@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class PlayerService implements UserDetailsService {
     private final PlayerRepository playerRepository;
@@ -26,6 +28,13 @@ public class PlayerService implements UserDetailsService {
         return new MyUserPrincipal(player);
     }
 
+    public void setUserIsConnected(String username, Boolean isConnected) {
+        playerRepository.updateIsUserConnected(username,isConnected);
+    }
+
+    public List<PlayerBean> findPlayersReadyToPlay(String username) {
+        return playerRepository.findPlayersReadyToPlay(username);
+    }
 
 
 }
