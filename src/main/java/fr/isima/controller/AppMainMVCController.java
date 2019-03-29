@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/main")
 public class AppMainMVCController {
 
+    private static final String APPS_MAIN_VIEW_NAME = "apps-main";
+
     private ListConnectedUserMVCController listConnectedUserMVCController;
 
     @Autowired
@@ -20,6 +22,6 @@ public class AppMainMVCController {
 
     @GetMapping
     public ModelAndView main() {
-        return this.listConnectedUserMVCController.getConnectedUsers("apps-main");
+        return this.listConnectedUserMVCController.getConnectedUsers(APPS_MAIN_VIEW_NAME);
     }
 }

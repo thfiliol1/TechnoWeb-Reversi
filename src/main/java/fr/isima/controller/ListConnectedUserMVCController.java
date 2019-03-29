@@ -20,6 +20,8 @@ public class ListConnectedUserMVCController {
 
     private final PlayerService playerService;
 
+    private static final String LIST_AVAILABLE_PLAYER_NAME = "listAvailablePlayers";
+
 
     @Autowired
     public ListConnectedUserMVCController(PlayerService playerService) {
@@ -29,6 +31,6 @@ public class ListConnectedUserMVCController {
     public ModelAndView getConnectedUsers(String viewName) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = ((MyUserPrincipal)authentication.getPrincipal()).getUsername();
-        return new ModelAndView(viewName,"listAvailablePlayers",playerService.findPlayersReadyToPlay(username));
+        return new ModelAndView(viewName,LIST_AVAILABLE_PLAYER_NAME,playerService.findPlayersReadyToPlay(username));
     }
 }

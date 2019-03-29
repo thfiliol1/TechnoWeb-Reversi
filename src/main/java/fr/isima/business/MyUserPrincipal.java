@@ -49,4 +49,12 @@ public class MyUserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public PlayerBean getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerBean player) {
+        this.player = player;
+    }
 }

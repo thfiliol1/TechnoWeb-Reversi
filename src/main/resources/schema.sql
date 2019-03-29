@@ -15,19 +15,19 @@ CREATE TABLE PLAYER (
 
 CREATE TABLE GAME (
    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-   id_player1 INTEGER,
-   id_player2 INTEGER,
-   playing BIT,
-   FOREIGN KEY (id_player1) REFERENCES PLAYER(id),
-   FOREIGN KEY (id_player2) REFERENCES PLAYER(id)
+   id_player1_id INTEGER,
+   id_player2_id INTEGER,
+   playing INTEGER,
+   FOREIGN KEY (id_player1_id) REFERENCES PLAYER(id),
+   FOREIGN KEY (id_player2_id) REFERENCES PLAYER(id)
 );
 
 CREATE TABLE BOX (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  id_player INTEGER,
-  id_game INTEGER,
+  id_player_id INTEGER,
+  id_game_id INTEGER,
   X_POSITION INTEGER,
   Y_POSITION INTEGER,
-  FOREIGN KEY (id_player) REFERENCES PLAYER(id),
-  FOREIGN KEY (id_game) REFERENCES GAME(id)
+  FOREIGN KEY (id_player_id) REFERENCES PLAYER(id),
+  FOREIGN KEY (id_game_id) REFERENCES GAME(id)
 );
