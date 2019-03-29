@@ -2,7 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="container">
-    <h1>Todo : generate grid</h1>
+    <br/>
+    <br/>
+    <center>
+        <tbody>
+            <table style="border:10px solid #123e12; background:#123e12;">
+                <th:block th:with="colCount=${8}">
+                    <tr th:each="r : ${#numbers.sequence(0, listGameBoxes.size()-1, colCount)}" >
+                        <td th:each="c : ${#numbers.sequence(0, colCount - 1)}" th:if="${r + c &lt; listGameBoxes.size()}">
+                            <img th:if="${listGameBoxes.get(r + c).idPlayer == null}" th:src="@{/resources/images/_.gif}"/>
+                            <img th:if="${listGameBoxes.get(r + c).idPlayer != null and (listGameBoxes.get(r + c).idPlayer.id == #request.userPrincipal.principal.player.id)}" th:src="@{/resources/images/white.gif}"/>
+                            <img th:if="${listGameBoxes.get(r + c).idPlayer != null and not (listGameBoxes.get(r + c).idPlayer.id == #request.userPrincipal.principal.player.id)}" th:src="@{/resources/images/black.gif}"/>
+                        </td>
+                    </tr>
+                </th:block>
+            </table>
+        </tbody>
+    </center>
+    <br/>
+    <br/>
 </div>
 </body>
 </html>

@@ -72,4 +72,9 @@ public class BoxBean {
     public void setyPosition(Integer yPosition) {
         this.yPosition = yPosition;
     }
+
+    @Override
+    public String toString() {
+        return idPlayer == null ? "vide" : idPlayer.getId().toString();
+    }
 }

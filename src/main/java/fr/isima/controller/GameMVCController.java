@@ -27,6 +27,8 @@ public class GameMVCController {
 
     private static final String LIST_GAME_BOXES_NAME = "listGameBoxes";
 
+    private static final String CURRENT_PLAYER_ID_BOXES_NAME = "currentPlayerId";
+
     private final GameService gameService;
 
     private final PlayerService playerService;
