@@ -20,10 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/play")
+@RequestMapping("/game")
 public class GameMVCController {
 
     private static final String GAME_VIEW_NAME = "game";
+
+    private static final String GRID_VIEW_NAME = "grille";
 
     private static final String LIST_GAME_BOXES_NAME = "listGameBoxes";
 
@@ -45,6 +47,51 @@ public class GameMVCController {
         PlayerBean player1 = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
         GameBean game = gameService.createGame(player1,selectedPlayer);
         List<BoxBean> boxes = gameService.getAllGridBoxes(game);
-        return new ModelAndView(GAME_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes);
+        int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
+        int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
+        return new ModelAndView(GAME_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
+                .addObject("nbPawn1",nbPawn1)
+                .addObject("player2",game.getIdPlayer2().getUsername())
+                .addObject("nbPawn2",nbPawn2);
     }
+
+    @GetMapping
+    public ModelAndView play(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PlayerBean player = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
+        GameBean game = gameService.gameOfPlayer(player);
+        List<BoxBean> boxes = gameService.getAllGridBoxes(game);
+        int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
+        int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
+        return new ModelAndView(GAME_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
+                .addObject("nbPawn1",nbPawn1)
+                .addObject("player2",game.getIdPlayer2().getUsername())
+                .addObject("nbPawn2",nbPawn2);
+    }
+
+    @GetMapping("/grid")
+    public ModelAndView displayGrid(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PlayerBean player = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
+        GameBean game = gameService.gameOfPlayer(player);
+        if(game==null){
+            game=gameService.lastGameOfPlayer(player);
+        }
+        List<BoxBean> boxes = gameService.getAllGridBoxes(game);
+        int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
+        int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
+        return new ModelAndView(GRID_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
+                .addObject("nbPawn1",nbPawn1)
+                .addObject("player2",game.getIdPlayer2().getUsername())
+                .addObject("nbPawn2",nbPawn2);
+    }
+
+
+
+   /* @GetMapping("/started")
+    public ModelAndView gameIsStarted() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((MyUserPrincipal)authentication.getPrincipal()).getUsername();
+        return new ModelAndView("apps-main","listAvailablePlayers",playerService.findPlayersReadyToPlay(username));
+    }*/
 }

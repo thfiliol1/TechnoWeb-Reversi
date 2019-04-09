@@ -1,0 +1,21 @@
+$( document ).ready(function() {
+    refresh();
+});
+
+function refresh() {
+    setTimeout(gameIsStarted, 10000);
+}
+
+function gameIsStarted() {
+    $.ajax({
+        url: 'rest/game/started',
+        success: function (data, textStatus, jqXHR) {
+            if(data == true){
+                window.location.replace("game");
+            }
+            console.log(data);
+        }
+    });
+    refresh();
+}
+

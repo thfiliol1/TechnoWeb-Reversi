@@ -4,7 +4,7 @@
 <div class="container">
     <br/>
     <div th:if="${listAvailablePlayers != null and not #lists.isEmpty(listAvailablePlayers)}">
-        <form class="form-signin" action="/play" method="post">
+        <form class="form-signin" action="/game" method="post">
             <h3>Veuillez selectionner un joueur afin de commencer la partie :</h3>
             <br/>
             <select name="selectedPlayer" class="form-control">

@@ -6,10 +6,11 @@
     <br/>
     <center>
         <tbody>
+            <div id="msg_info" class="alert alert-info" style="margin-left: 15%;margin-right: 15%; "></div>
             <table style="border:10px solid #123e12; background:#123e12;">
                 <th:block th:with="colCount=${8}">
                     <tr th:each="r : ${#numbers.sequence(0, listGameBoxes.size()-1, colCount)}" >
-                        <td th:each="c : ${#numbers.sequence(0, colCount - 1)}" th:if="${r + c &lt; listGameBoxes.size()}">
+                        <td th:each="c : ${#numbers.sequence(0, colCount - 1)}" th:if="${r + c &lt; listGameBoxes.size()}" th:id="${listGameBoxes.get(r + c).id}" th:onclick="play(this.id)">
                             <img th:if="${listGameBoxes.get(r + c).idPlayer == null}" th:src="@{/resources/images/_.gif}"/>
                             <img th:if="${listGameBoxes.get(r + c).idPlayer != null and (listGameBoxes.get(r + c).idPlayer.id == #request.userPrincipal.principal.player.id)}" th:src="@{/resources/images/white.gif}"/>
                             <img th:if="${listGameBoxes.get(r + c).idPlayer != null and not (listGameBoxes.get(r + c).idPlayer.id == #request.userPrincipal.principal.player.id)}" th:src="@{/resources/images/black.gif}"/>
@@ -17,6 +18,30 @@
                     </tr>
                 </th:block>
             </table>
+            <br/>
+
+            <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3"th:text="${player1}">
+
+                        </div>
+                        <div class="col-md-3" th:text="${nbPawn1}">
+                            One of three columns
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3" th:text="${player2}">
+
+                        </div>
+                        <div class="col-md-3" th:text="${nbPawn2}">
+                            One of three columns
+                        </div>
+                    </div>
+            </div>
         </tbody>
     </center>
     <br/>
