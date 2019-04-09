@@ -37,14 +37,32 @@ public class GameMVCRestController {
 
     @GetMapping("/canPlay")
     public int playerCanPlay() {
+        PlayerBean adv;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PlayerBean player = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
-        GameBean game = gameService.gameOfPlayer(player);
         int code = gameService.playerCanPlay(player);
-        if( code == 1){
-            if(!gameService.existPossibleMove(game, player)) {
-                gameService.changePlayer(game, player);
-                code=0;
+        if (code != -1) {
+            GameBean game = gameService.gameOfPlayer(player);
+
+            if (game.getIdPlayer1().getId() == player.getId()) {
+                adv = game.getIdPlayer2();
+            } else {
+                adv = game.getIdPlayer1();
+            }
+
+
+            if (code == 1) {
+                if (!gameService.existPossibleMove(game, player)) {
+                    if (!gameService.existPossibleMove(game, adv)) {
+                        gameService.endOfGame(game);
+                        code = -1;
+                    } else {
+                        gameService.changePlayer(game, player);
+                        code = 0;
+                    }
+
+                }
+
             }
         }
         return code;

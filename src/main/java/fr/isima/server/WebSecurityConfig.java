@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .addLogoutHandler((request, response, authentication) -> {
                     playerService.setUserIsConnected(authentication.getName(),false);
+                    playerService.setUserIsPlaying(authentication.getName(),false);
                 })
                 .permitAll();
     }

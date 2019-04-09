@@ -18,6 +18,11 @@ public interface PlayerRepository extends CrudRepository<PlayerBean, Integer> {
     @Query(value = "UPDATE PlayerBean pla SET pla.isConnected = :isConnected WHERE pla.username = :username")
     void updateIsUserConnected(@Param("username") String username, @Param("isConnected") Boolean isConnected);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE PlayerBean pla SET pla.isPlaying = :isPlaying WHERE pla.username = :username")
+    void updateIsPlaying(@Param("username") String username, @Param("isPlaying") Boolean isPlaying);
+
     @Query("SELECT pla FROM PlayerBean pla WHERE pla.isConnected = true AND pla.isPlaying = false AND pla.username != :username")
     List<PlayerBean> findPlayersReadyToPlay(@Param("username") String username);
 

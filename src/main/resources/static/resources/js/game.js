@@ -3,7 +3,7 @@ $( document ).ready(function() {
 });
 
 function refresh() {
-    setTimeout(gameIsStarted, 10000);
+    setTimeout(gameIsStarted, 5000);
 }
 
 function gameIsStarted() {

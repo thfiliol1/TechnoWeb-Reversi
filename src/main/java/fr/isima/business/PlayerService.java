@@ -32,6 +32,10 @@ public class PlayerService implements UserDetailsService {
         playerRepository.updateIsUserConnected(username,isConnected);
     }
 
+    public void setUserIsPlaying(String username, Boolean isPlaying){
+        playerRepository.updateIsPlaying(username,isPlaying);
+    }
+
     public List<PlayerBean> findPlayersReadyToPlay(String username) {
         return playerRepository.findPlayersReadyToPlay(username);
     }

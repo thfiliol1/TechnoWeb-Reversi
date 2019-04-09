@@ -6,7 +6,7 @@ $( document ).ready(function() {
 var endGame=false;
 
 function refreshAndWait() {
-    setTimeout(playerCanPlay, 5000,false);
+    setTimeout(playerCanPlay, 1000,false);
 }
 
 function playerCanPlay(oneCall){
@@ -100,14 +100,17 @@ function isWinner(){
             if(winner == 1) {
                 $("#msg_info").attr("class", "alert alert-success");
                 $("#msg_info").text("Bravo vous avez gagné !");
+                $("#msg_info").append("<a class=\"btn btn-primary\" style=\"margin-left: 25%;\" href=\"/main\" role=\"button\">Nouvelle partie</a>");
             }
             else if(winner == 0) {
                 $("#msg_info").attr("class", "alert alert-primary");
                 $("#msg_info").text("Vous vous êtes neutralisés ! Match nul !");
+                $("#msg_info").append("<a class=\"btn btn-primary\" style=\"margin-left: 25%;\" href=\"/main\" role=\"button\">Nouvelle partie</a>");
             }
             else{
                 $("#msg_info").attr("class", "alert alert-danger");
                 $("#msg_info").text("Vous avez perdu !");
+                $("#msg_info").append("<a class=\"btn btn-primary\" style=\"margin-left: 25%;\" href=\"/main\" role=\"button\">Nouvelle partie</a>");
             }
 
         }
