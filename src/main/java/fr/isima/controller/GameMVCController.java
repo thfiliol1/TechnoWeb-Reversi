@@ -46,13 +46,7 @@ public class GameMVCController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PlayerBean player1 = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
         GameBean game = gameService.createGame(player1,selectedPlayer);
-        List<BoxBean> boxes = gameService.getAllGridBoxes(game);
-        int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
-        int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
-        return new ModelAndView(GAME_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
-                .addObject("nbPawn1",nbPawn1)
-                .addObject("player2",game.getIdPlayer2().getUsername())
-                .addObject("nbPawn2",nbPawn2);
+        return displayView(game,GAME_VIEW_NAME);
     }
 
     @GetMapping
@@ -60,13 +54,7 @@ public class GameMVCController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PlayerBean player = ((MyUserPrincipal)authentication.getPrincipal()).getPlayer();
         GameBean game = gameService.gameOfPlayer(player);
-        List<BoxBean> boxes = gameService.getAllGridBoxes(game);
-        int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
-        int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
-        return new ModelAndView(GAME_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
-                .addObject("nbPawn1",nbPawn1)
-                .addObject("player2",game.getIdPlayer2().getUsername())
-                .addObject("nbPawn2",nbPawn2);
+        return displayView(game,GAME_VIEW_NAME);
     }
 
     @GetMapping("/grid")
@@ -77,21 +65,18 @@ public class GameMVCController {
         if(game==null){
             game=gameService.lastGameOfPlayer(player);
         }
+        return displayView(game,GRID_VIEW_NAME);
+    }
+
+    public ModelAndView displayView(GameBean game, String view){
         List<BoxBean> boxes = gameService.getAllGridBoxes(game);
         int nbPawn1 = gameService.getNbPawnByPlayer(game, game.getIdPlayer1());
         int nbPawn2 = gameService.getNbPawnByPlayer(game, game.getIdPlayer2());
-        return new ModelAndView(GRID_VIEW_NAME,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
+        return new ModelAndView(view,LIST_GAME_BOXES_NAME,boxes).addObject("player1",game.getIdPlayer1().getUsername())
                 .addObject("nbPawn1",nbPawn1)
                 .addObject("player2",game.getIdPlayer2().getUsername())
                 .addObject("nbPawn2",nbPawn2);
     }
 
 
-
-   /* @GetMapping("/started")
-    public ModelAndView gameIsStarted() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((MyUserPrincipal)authentication.getPrincipal()).getUsername();
-        return new ModelAndView("apps-main","listAvailablePlayers",playerService.findPlayersReadyToPlay(username));
-    }*/
 }

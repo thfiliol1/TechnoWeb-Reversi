@@ -20,11 +20,9 @@ function playerCanPlay(oneCall){
                 else{
                     $("#msg_info").text("A vous de jouer ! (jetons: blanc)");
                 }
-                console.log("je peux jouer!");
             }
             else if(data == 0){
                 $("#msg_info").text("Le joueur adverse est en train de jouer !");
-                console.log("je ne peux pas jouer encore!");
                 if(!oneCall) {
                     refreshAndWait();
                 }
@@ -32,16 +30,12 @@ function playerCanPlay(oneCall){
             else{
                 endGame = true;
                 refreshGrid(-1);
-                console.log("fin de la partie!");
-               // isWinner();
             }
         }
     });
 }
 
 function play(id){
-    console.log("click");
-    console.log(id);
     $.ajax({
         url: 'rest/game/canPlay',
         success: function (data, textStatus, jqXHR) {
@@ -56,7 +50,6 @@ function play(id){
                             alert("Cette case ne peut pas être jouée !")
                         }
                         else if (data == 1){
-                            console.log("j'ai pose le pion!");
                             $("#msg_info").text("Le joueur adverse est en train de jouer !");
                             refreshGrid(1);
                             refreshAndWait();
@@ -64,14 +57,13 @@ function play(id){
                         else{
                             refreshGrid(0);
                             refreshAndWait();
-
                         }
-                        //console.log(data);
                     }
                 });
             }
-            else{
-                console.log("je ne peux pas jouer!");
+            else if(data == -1){
+                endGame = true;
+                refreshGrid(0);
             }
         }
     });
@@ -112,7 +104,6 @@ function isWinner(){
                 $("#msg_info").text("Vous avez perdu !");
                 $("#msg_info").append("<a class=\"btn btn-primary\" style=\"margin-left: 25%;\" href=\"/main\" role=\"button\">Nouvelle partie</a>");
             }
-
         }
     });
 }

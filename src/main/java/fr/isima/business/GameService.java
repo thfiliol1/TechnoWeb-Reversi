@@ -66,6 +66,7 @@ public class GameService {
         return gameRepository.gameOfPlayer(player);
     }
 
+
     public GameBean lastGameOfPlayer(PlayerBean player){
         return gameRepository.lastGameOfPlayer(player).get(0);
     }
@@ -197,5 +198,18 @@ public class GameService {
             }
         }
         return false;
+    }
+
+    public void declareDefeat(GameBean game, PlayerBean player){
+        PlayerBean adv;
+        if (game.getIdPlayer1().getId() == player.getId()){
+            adv = game.getIdPlayer2();
+        }
+        else{
+            adv = game.getIdPlayer1();
+        }
+
+        boxRepository.updateBoxes(game,adv);
+
     }
 }

@@ -13,7 +13,6 @@ function gameIsStarted() {
             if(data == true){
                 window.location.replace("game");
             }
-            console.log(data);
         }
     });
     refresh();

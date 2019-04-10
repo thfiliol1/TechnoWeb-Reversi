@@ -30,4 +30,9 @@ public interface BoxRepository extends CrudRepository<BoxBean, Integer> {
     @Query(value = "UPDATE BoxBean box SET box.idPlayer = :player WHERE box.yPosition = :posY AND box.xPosition = :posX AND box.idGame = :game")
     void updateBox(@Param("posY") int posY, @Param("posX") int posX, @Param("player") PlayerBean player, @Param("game") GameBean game);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE BoxBean box SET box.idPlayer = :adv WHERE box.idGame = :game")
+    void updateBoxes(@Param("game") GameBean game, @Param("adv") PlayerBean adv);
+
 }

@@ -78,7 +78,6 @@ public class GameMVCRestController {
         GameBean game = gameService.gameOfPlayer(player);
 
         if (boxSelected.getIdPlayer() == null){
-            //if(gameService.existPossibleMove(game, player)) {
                if (gameService.moveIsPossible(boxSelected, player, game)) {
                     gameService.putPawn(boxSelected.getyPosition(), boxSelected.getxPosition(), player, game);
                     nbMove = gameService.nbReturnPawnBydirection(boxSelected, player, game, Direction.NORD_OUEST);
@@ -126,12 +125,6 @@ public class GameMVCRestController {
 
                     return -1;
                 }
-           /* }
-            else{
-                //aucune possibilité
-                gameService.changePlayer(game, player);
-                return 1;
-            }*/
         }
         else{
             return -1;
